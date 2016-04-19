@@ -9,7 +9,7 @@ describe Oystercard do
   it 'raises an error if top up amount exceeds 90' do
     maximum_balance = Oystercard::BALANCE_LIMIT
     subject.top_up(maximum_balance)
-    expect { subject.top_up 1 }.to raise_error 'balance should not exceed £90'
+    expect { subject.top_up 1 }.to raise_error "balance should not exceed £#{maximum_balance}"
   end
 
 end
