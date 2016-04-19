@@ -22,6 +22,14 @@ class Oystercard
     true
   end
 
+  def touch_in
+   in_journey?
+  end
+
+  def touch_out
+   !in_journey?
+  end
+
   def reach_limit?
     @balance + @amount > BALANCE_LIMIT
   end

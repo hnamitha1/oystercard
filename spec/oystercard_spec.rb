@@ -24,5 +24,15 @@ describe Oystercard do
     expect(subject.in_journey?).to be true
   end
 
+  it{is_expected.to respond_to(:touch_in)}
 
+  it "journey starts with touch in" do
+    expect(subject.touch_in).to eq true
+  end
+
+  it{is_expected.to respond_to(:touch_out)}
+
+  it "journey ends with touch out" do
+    expect(subject.touch_out).to eq false
+  end
 end
