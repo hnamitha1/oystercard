@@ -5,6 +5,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @status = false
   end
 
   def top_up(amount)
@@ -19,15 +20,17 @@ class Oystercard
   end
 
   def in_journey?
-    true
+     @status
   end
 
   def touch_in
-   in_journey?
+    @status = true
+    in_journey?
   end
 
   def touch_out
-   !in_journey?
+    @status = false
+    in_journey?
   end
 
   def reach_limit?
