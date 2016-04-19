@@ -3,8 +3,10 @@ require 'oystercard'
 describe Oystercard do
 
   let(:station) {double :station}
-  # let(:card_balance) {double(:card, balance: Oystercard::BALANCE_LIMIT, entry_station: station)}
-#  let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
+  let(:entry_station) { double :station }
+  let(:exit_station) { double :station } 
+# let(:card_balance) {double(:card, balance: Oystercard::BALANCE_LIMIT, entry_station: station)}
+  let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
 
   it "can top up the balance" do
     expect { subject.top_up 1 }.to change{ subject.balance }.by 1
@@ -60,8 +62,8 @@ describe Oystercard do
 
   it "stores journey" do
     subject.top_up 30
-    subject.touch_in(:entry_station)
-    subject.touch_out(:exit_station)
+    subject.touch_in(entry_station)
+    subject.touch_out(exit_station)
     expect(subject.journeys).to include journey
 
 
