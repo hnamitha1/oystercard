@@ -18,7 +18,7 @@ describe Oystercard do
     expect(subject).not_to be_in_journey
   end
 
-  it{is_expected.to respond_to(:touch_in)}
+  it{is_expected.to respond_to(:touch_in).with(1).argument}
 
   it "journey starts with touch in" do
     subject.top_up 12
