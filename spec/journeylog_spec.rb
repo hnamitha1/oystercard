@@ -2,7 +2,7 @@ require 'journey_log'
 
 describe JourneyLog do
 
-  let(:journey_class) { Journey.new }
+  let(:journey_class) { Journey.new(entry_station) }
   subject(:journey_log) { described_class.new(journey_class) }
   let(:entry_station) {double(:station, name:"Old Street",zone: 4) }
 
