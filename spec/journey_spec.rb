@@ -1,18 +1,19 @@
 require 'journey'
 
 describe Journey do
-	subject(:journey) {Journey.new}
+  subject(:journey) { Journey.new }
   let(:entry_station) {double(:station, name:"oldStreet",zone: 4)}
   let(:exit_station) {double(:station, name:"bank", zone:3)}
+  let(:journey_log) { double(:journey_log) }
 
 
-  describe '#start_journey' do
+  # describe '#start_journey' do
 
-    it "logs in the entry station" do
-       expect(journey.start_journey entry_station).to eq entry_station 
-    end	
+  #   it "logs in the entry station" do
+  #      expect(journey.start_journey entry_station).to eq entry_station 
+  #   end	
 
-  end
+  # end
 
   describe '#finish_journey' do
 
@@ -23,7 +24,7 @@ describe Journey do
   end	
 
   it "checks journey is complete" do
-      journey.start_journey entry_station
+      journey_log.start
       expect(journey.journey_complete?).to be false
   end	
 
