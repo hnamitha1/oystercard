@@ -5,7 +5,7 @@ describe Journey do
   subject(:journey) { described_class.new(entry_station) }
 
   let(:entry_station) {double(:station, name:"Old Street",zone: 4)}
-  let(:exit_station) {double(:station, name:"Bank", zone:3)}
+  let(:exit_station) {double(:station, name:"Bank", zone: 3)}
 
   it "sets entry station" do
      expect(journey.entry_station).to eq entry_station
