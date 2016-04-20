@@ -15,3 +15,4 @@ p log.journey_class
 p log.start
 p log.current_journey
 p log.journeys
+p log.journeys
