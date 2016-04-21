@@ -2,11 +2,21 @@ require 'oystercard'
 
 describe Oystercard do
 
+  subject(:card){described_class.new}
+
   let(:station) {double :station}
   let(:entry_station) { double :station }
   let(:exit_station) { double :station }
 # let(:card_balance) {double(:card, balance: Oystercard::BALANCE_LIMIT, entry_station: station)}
   let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
+
+  let(:loaded_card) do
+   loaded_card = Oystercard.new
+   loaded_card.top_up(Oystercard::BALANCE_LIMIT)
+   loaded_card
+  end
+
+  
 
   describe '#top_up' do
 
@@ -16,8 +26,7 @@ describe Oystercard do
 
     it 'raises an error if top up amount exceeds 90' do
       maximum_balance = Oystercard::BALANCE_LIMIT
-      subject.top_up(maximum_balance)
-      expect { subject.top_up 1 }.to raise_error "balance should not exceed £#{maximum_balance}"
+      expect { loaded_card.top_up 1 }.to raise_error "balance should not exceed £#{maximum_balance}"
     end
 
   end
@@ -90,7 +99,7 @@ describe Oystercard do
       subject.touch_out(exit_station)
       expect(subject.journeys).to include journey
     end
-
+   
   end
 
 end
