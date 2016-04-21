@@ -1,10 +1,18 @@
+require 'journey'
+
 class Journeylog
   
-  attr_reader :journeys,:journey_class
+  attr_reader :journeys,:journey
 
-  def initialize(journey_class)
+  def initialize
   	@journeys = []
-  	@journey_class = journey_class
+  	@journey = Journey.new
   end	
+
+  def journeylogs
+  	entry_station = @journey.entry_station
+  	exit_station = @journey.exit_station
+    @journeys << { entry_station: entry_station, exit_station: exit_station }
+  end
  
 end

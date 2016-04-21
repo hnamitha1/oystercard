@@ -1,26 +1,34 @@
 require 'journeylog'
+require 'journey'
 
 describe Journeylog do
 
-	subject(:journeylog){described_class.new(:journey)}
-	let(:journey) {double(:journey)}
-	let(:journey_class) {double(:journey_class, new: journey )}
-
+	subject(:journeylog){described_class.new}
+	let(:journey) {Journey.new}
+	#let(:journey) {double(:journey, start_journey: entry_station, finish_journey: exit_station)}
+	#let(:journey_class) {double(:journey_class, new: journey )}
+	let(:entry_station){double(:entry_station)}
+	let(:exit_station) {double(:exit_station)}
+    
     context "when initialize" do
 	    it "journey should be empty when we start" do
 	    	expect(journeylog.journeys).to be_empty
 	    end
 
 	    it "creates a new journey" do
-	    	expect(journeylog.journey_class).not_to be nil
+	    	expect(journeylog.journey).not_to be nil
 	    end	
     end
-    
-    describe '#start' do
-    	it "start a journey" do
-    		expect(journey_class.to_recieve(:new) .to eq entry_station
+
+    context "history updates" do
+    	it "get the entry station when journey starts" do
+    		journeylog.journey.start_journey(entry_station)
+    		journeylog.journey.finish_journey(exit_station)
+    		journeylog.journeylogs
+    		expect(journeylog.journeys.last).to eq({entry_station: entry_station,exit_station: exit_station})
     	end
     end
+       
 end
 
 
