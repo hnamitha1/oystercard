@@ -25,16 +25,12 @@ class Oystercard
 
   def touch_in(station)
     fail "insufficient balance" if @balance < MINIMUM_BALANCE
-    @entry_station = journey.start_journey(station)
-    p "entry station: #{@entry_station}"
-
+    @entry_station = journey.start_journey(station)    
   end
 
   def touch_out(station)
     @exit_station = journey.finish_journey(station)
-    p "exit station: #{@exit_station}"
     @journeys << { entry_station: @entry_station, exit_station: @exit_station }
-    p "object journey: #{journey.journey_complete?}"
     deduct(journey.fare)
     @entry_station = nil
   end
