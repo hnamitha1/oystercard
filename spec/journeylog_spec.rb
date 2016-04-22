@@ -1,47 +1,49 @@
-require 'journeylog'
 require 'journey'
+require 'journeylog'
 
-describe Journeylog do
+describe JourneyLog do
+ 
+   subject(:journey_log) { described_class.new(Journey) }
+   let(:entry_station) { double(:station, name: "A", zone: 1) }
+   let(:exit_station) {double(:station, name: "B", zone: 2)}
 
-	subject(:journeylog){described_class.new}
-	let(:journey) {Journey.new}
-	#let(:journey) {double(:journey, start_journey: entry_station, finish_journey: exit_station)}
-	#let(:journey_class) {double(:journey_class, new: journey )}
-	let(:entry_station){double(:entry_station)}
-	let(:exit_station) {double(:exit_station)}
-    
-    context "when initialize" do
-	    it "journey should be empty when we start" do
-	    	expect(journeylog.journeys).to be_empty
-	    end
+   describe '#initialize' do
+   	it "empty list of journeys" do
+   		expect(journey_log.journeys).to be_empty
+   	end
+   end
 
-	    it "creates a new journey" do
-	    	expect(journeylog.journey).not_to be nil
-	    end	
-    end
+   describe '#begin_journey' do
+   	it "returns entry_station"	do
+   		expect(journey_log.begin_journey(entry_station)).to eq  entry_station
+   	end
+   end
 
-    context "history updates" do
-    	it "get the entry station when journey starts" do
-    		journeylog.journey.start_journey(entry_station)
-    		journeylog.journey.finish_journey(exit_station)
-    		journeylog.journeylogs
-    		expect(journeylog.journeys.last).to eq({entry_station: entry_station,exit_station: exit_station})
-    	end
+   describe '#end_journey' do
+   	before do
+   	  journey_log.begin_journey(entry_station)	
+   	end
 
-    	it 'records a journey' do
-		    journeylog.journey.start_journey(entry_station)
-		    journeylog.journey.finish_journey(exit_station)
-    		journey1 = journeylog.journeylogs
-		    expect(journeylog.journeys).to eq (journey1)
-	    end
-    end
-       
+   	it "returns exit station" do
+   		journey = journey_log.end_journey(exit_station)
+   		expect(journey_log.journeys).to include journey  
+   	end
+   end 
+   
+   describe '#journeys' do 
+   	before do
+   		3.times {
+   			journey_log.begin_journey(entry_station)
+   			journey_log.end_journey(exit_station)
+   		}
+   	end
+   	
+   	it "list of journeys" do
+   		expect(journey_log.journeys).to be_a(Array)
+   		expect(journey_log.journeys.size).to eq 3
+   	end
+
+
+ end
 end
 
-
-
-#start should start a new journey with an entry station
-# a private method #current_journey should return an incomplete journey or create a new journey
- #finish should add an exit station to the current_journey
- #journeys should return a list of all previous journeys without exposing the internal array to external modification
- #remove redundant code from OysterCard class
