@@ -1,38 +1,34 @@
+require_relative 'journeylog'
+
 class Oystercard
 
   BALANCE_LIMIT = 90
   MINIMUM_BALANCE = 1
   MINIMUM_FARE = 1
   PENALTY = 6
-  attr_reader :balance, :entry_station, :exit_station, :journeys, :journey
+  attr_reader :balance,:journeylog
 
-  def initialize(journey = Journey.new)
+  def initialize(journeylog = JourneyLog.new(Journey))
     @balance = 0
-    @journeys = []
-    @journey = journey
+    @journeylog = journeylog
   end
-
+  
   def top_up(amount)
     @amount = amount
-
-   fail "balance should not exceed £#{BALANCE_LIMIT}"  if reach_limit?
-   @balance += amount
-  end
-
-  def in_journey?
-    !!entry_station
+    fail "balance should not exceed £#{BALANCE_LIMIT}"  if reach_limit?
+    @balance += amount
   end
 
   def touch_in(station)
     fail "insufficient balance" if @balance < MINIMUM_BALANCE
-    @entry_station = journey.start_journey(station)    
+    @journeylog.begin_journey(station)    
   end
 
   def touch_out(station)
-    @exit_station = journey.finish_journey(station)
-    @journeys << { entry_station: @entry_station, exit_station: @exit_station }
-    deduct(journey.fare)
-    @entry_station = nil
+    exit_station = @journeylog.end_journey(station)
+    #@journeys << { entry_station: @entry_station, exit_station: @exit_station }
+    deduct(exit_station.fare)
+    #@entry_station = nil
   end
 
   private

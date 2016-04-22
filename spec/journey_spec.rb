@@ -15,14 +15,6 @@ describe Journey do
 
   end
 
-  describe '#finish_journey' do
-
-    it "logs in the exit station" do
-      expect(journey.finish_journey exit_station).to eq exit_station
-    end 
-
-  end 
-
   it "checks journey is complete" do
       journey.start_journey entry_station
       expect(journey.journey_complete?).to be false

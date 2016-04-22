@@ -17,6 +17,11 @@ describe JourneyLog do
    	it "returns entry_station"	do
    		expect(journey_log.begin_journey(entry_station)).to eq  entry_station
    	end
+
+      it "throws error touches two times" do
+         journey_log.begin_journey(entry_station)
+         expect{journey_log.begin_journey(entry_station)}.to raise_error "Already in journey"
+      end
    end
 
    describe '#end_journey' do
