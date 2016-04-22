@@ -1,29 +1,41 @@
-require 'journey_log'
+require 'journeylog'
+require 'journey'
 
-describe JourneyLog do
+describe Journeylog do
 
-  subject(:journey_log) { described_class.new(journey_class) }
-  let(:journey_class) { Journey.new(entry_station) }
-  let(:entry_station) { double(:station, name:"Old Street",zone: 4) }
-  let(:exit_station) { double(:station, name: "Bank", zone: 1) }
+	subject(:journeylog){described_class.new}
+	let(:journey) {Journey.new}
+	#let(:journey) {double(:journey, start_journey: entry_station, finish_journey: exit_station)}
+	#let(:journey_class) {double(:journey_class, new: journey )}
+	let(:entry_station){double(:entry_station)}
+	let(:exit_station) {double(:exit_station)}
+    
+    context "when initialize" do
+	    it "journey should be empty when we start" do
+	    	expect(journeylog.journeys).to be_empty
+	    end
 
-  describe '#start' do
-    it "logs in the entry station" do
-      expect(journey_log.start).to eq journey_class
-    end 
-  end
-
-  describe '#finish' do
-    it 'adds exit station to current_journey' do
-      journey_class.exit(exit_station)
-      expect(journey_log.current_journey).to eq journey_class
+	    it "creates a new journey" do
+	    	expect(journeylog.journey).not_to be nil
+	    end	
     end
-  end
 
-  describe '#journeys' do
-    it 'returns a list of previous journeys' do
-      expect(journey_log.journeys).to include journey_class
+    context "history updates" do
+    	it "get the entry station when journey starts" do
+    		journeylog.journey.start_journey(entry_station)
+    		journeylog.journey.finish_journey(exit_station)
+    		journeylog.journeylogs
+    		expect(journeylog.journeys.last).to eq({entry_station: entry_station,exit_station: exit_station})
+    	end
     end
-  end
-
+       
 end
+
+
+
+#start should start a new journey with an entry station
+# a private method #current_journey should return an incomplete journey or create a new journey
+ #finish should add an exit station to the current_journey
+ #journeys should return a list of all previous journeys without exposing the internal array to external modification
+ #remove redundant code from OysterCard class
+>>>>>>> day-four
