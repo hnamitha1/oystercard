@@ -27,6 +27,13 @@ describe Journeylog do
     		journeylog.journeylogs
     		expect(journeylog.journeys.last).to eq({entry_station: entry_station,exit_station: exit_station})
     	end
+
+    	it 'records a journey' do
+		    journeylog.journey.start_journey(entry_station)
+		    journeylog.journey.finish_journey(exit_station)
+    		journey1 = journeylog.journeylogs
+		    expect(journeylog.journeys).to eq (journey1)
+	    end
     end
        
 end
