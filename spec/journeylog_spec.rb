@@ -38,4 +38,3 @@ end
  #finish should add an exit station to the current_journey
  #journeys should return a list of all previous journeys without exposing the internal array to external modification
  #remove redundant code from OysterCard class
->>>>>>> day-four

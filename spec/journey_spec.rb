@@ -2,22 +2,30 @@ require 'journey'
 
 describe Journey do
 
-  subject(:journey) { described_class.new(entry_station) }
+  subject(:journey) { Journey.new}
 
   let(:entry_station) {double(:station, name:"Old Street",zone: 4)}
   let(:exit_station) {double(:station, name:"Bank", zone: 3)}
 
-  it "sets entry station" do
-     expect(journey.entry_station).to eq entry_station
-  end 
+  describe '#start_journey' do
 
-  it 'returns itself when exiting a journey' do
-    expect(journey.exit(exit_station)).to eq journey
+    it "logs in the entry station" do
+       expect(journey.start_journey entry_station).to eq entry_station 
+    end 
+
   end
 
+  describe '#finish_journey' do
+
+    it "logs in the exit station" do
+      expect(journey.finish_journey exit_station).to eq exit_station
+    end 
+
+  end 
+
   it "checks journey is complete" do
-    journey.entry_station
-    expect(journey.journey_complete?).to be false
+      journey.start_journey entry_station
+      expect(journey.journey_complete?).to be false
   end 
 
   describe '#fare' do
