@@ -10,7 +10,6 @@ class JourneyLog
   end	
 
   def begin_journey(station)
-    raise "Already in journey" if @current_journey
     @current_journey = journey_class.new
     add(@current_journey)
     @current_journey.start_journey(station)
